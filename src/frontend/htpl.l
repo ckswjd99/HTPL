@@ -29,7 +29,6 @@ tag_char    [\/\<\>]
 }
 
 <OUTTAG>"<!"{white_space}?"DOCTYPE"{white_space}?[^\<\>\/]*">" { 
-    BEGIN INTAG;
     printf("doctype! %s\n", yytext);
     // return DOCTYPE_TAG;
 }
@@ -45,8 +44,17 @@ tag_char    [\/\<\>]
 }
 
  /* INTAG PARSER */
-<INTAG>([^\<\>\/ \n\t])+ {
+<INTAG>([^\<\>\/ \n\t=\"])+ {   // TAG NAME
     printf("tagname: %s\n", yytext);
+}
+<INTAG>([^\<\>\/ \n\t=\"])+/= { // ATTR NAME
+    printf("%s", yytext);
+}
+<INTAG>"=" {    // "="
+    printf(" = ");
+}
+<INTAG>\"([^\<\>\/ \n\t=\"])+\" {   // ATTR VALUE
+    printf("%s\n", yytext);
 }
 
 

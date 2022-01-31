@@ -12,7 +12,7 @@ YACC_OPTION = -vd
 all : htpl
 
 clean :
-	rm -f *.o lex.yy.c htpl.tab.c htpl.tab.h htpl.output htpl
+	rm -f *.o lex.yy.c htpl.tab.c htpl.tab.h htpl.output htpl htpl_lexer
 
 htpl : lex.yy.o hash.o htpl.tab.o
 	${CC} -o htpl lex.yy.o hash.o htpl.tab.o ${LINK_OPTION}

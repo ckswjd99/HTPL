@@ -6,7 +6,7 @@
 <body>
     <input name="condition" type="number" value="1" />
 
-    <a href="#ONE"><condition /></a>
+    <a href="#ONE"><condition /> PLUS 1</a>
     <a href="#TWO" />
 
     <hr id="ONE" />
@@ -16,5 +16,12 @@
     <hr id="TWO">
     <!--if statement-->
     <hr id="THREE">
+
+    <div>
+        3 PLUS 5
+    </div>
+    <div>
+        5 SAME WITH <p>"hello" PLUS 13</p>
+    </div>
 </body>
 </html>

@@ -6,6 +6,7 @@ static int lineno = 1;
 
 white_space		[ \t]+
 tag_char    [\/\<\>]
+special_char	\\[nt]
 
 %start INTAG OUTTAG SPECIALTAG
 %start COMMENT
@@ -29,7 +30,7 @@ tag_char    [\/\<\>]
 }
 
 <OUTTAG>"<!"{white_space}?"DOCTYPE"{white_space}?[^\<\>\/]*">" { 
-    printf("doctype! %s\n", yytext);
+    // printf("doctype! %s\n", yytext);
     // return DOCTYPE_TAG;
 }
 
@@ -45,16 +46,45 @@ tag_char    [\/\<\>]
 
  /* INTAG PARSER */
 <INTAG>([^\<\>\/ \n\t=\"])+ {   // TAG NAME
-    printf("tagname: %s\n", yytext);
+    // printf("tagname: %s\n", yytext);
 }
 <INTAG>([^\<\>\/ \n\t=\"])+/= { // ATTR NAME
-    printf("%s", yytext);
+    // printf("%s", yytext);
 }
 <INTAG>"=" {    // "="
-    printf(" = ");
+    // printf(" = ");
 }
 <INTAG>\"([^\<\>\/ \n\t=\"])+\" {   // ATTR VALUE
-    printf("%s\n", yytext);
+    // printf("%s\n", yytext);
+}
+
+ /* INNER EXPRESSIONS */
+<OUTTAG>"SAME WITH" { 
+    printf("%s\n", "operator: SAME WITH");
+}
+<OUTTAG>"LESS THAN" { 
+    printf("%s\n", "operator: LESS THAN");
+}
+<OUTTAG>"BIGGER THAN" { 
+    printf("%s\n", "operator: BIGGER THAN");
+}
+<OUTTAG>"PLUS" { 
+    printf("%s\n", "operator: PLUS");
+}
+<OUTTAG>"MINUS" { 
+    printf("%s\n", "operator: MINUS");
+}
+<OUTTAG>"MULT" { 
+    printf("%s\n", "operator: MULT");
+}
+<OUTTAG>"DIV" { 
+    printf("%s\n", "operator: DIV");
+}
+<OUTTAG>[0-9]+ { 
+    printf("number: %s\n", yytext);
+}
+<OUTTAG>\"({special_char}|[^\\\"\n\<\>])*\" { 
+    printf("string: %s\n", yytext);
 }
 
 

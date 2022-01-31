@@ -54,3 +54,4 @@ dkms.conf
 .vscode
 *.o
 *.yy.c
+htpl_lexer

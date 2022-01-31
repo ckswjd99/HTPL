@@ -53,5 +53,8 @@ dkms.conf
 
 .vscode
 *.o
-*.yy.c
+*.yy.*
+*.tab.*
+*.output
 htpl_lexer
+src/frontend/htpl

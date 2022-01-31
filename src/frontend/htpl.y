@@ -11,10 +11,12 @@ int    yyerror (char* s);
     char*   stringVal;
 }
 
+%left BIGGER LESS SAME PLUS MINUS MULT DIVIDE
+%left OR AND
+%right NOT
+
 %token COMMONTAG_OPEN_START COMMONTAG_CLOSE_START SINGLETAG_START SINGLETAG_END TAG_END
-%token DOCTYPE_TAG HTML HEAD BODY P
-%token OR AND NOT
-%token BIGGER LESS SAME PLUS MINUS MULT DIVIDE
+%token DOCTYPE_TAG HTML HEAD BODY
 %token NUMBER_CONST
 %token<stringVal> TAG_NAME ATTRIBUTE_NAME ATTRIBUTE_VAL STRING
 
@@ -59,9 +61,7 @@ common_tag_close: COMMONTAG_CLOSE_START TAG_NAME TAG_END
 single_tag: SINGLETAG_START TAG_NAME attribute_list SINGLETAG_END
 
 expr
-    : /* empty */
-    | unary
-    | or_expr
+    : or_expr
 
 or_expr
     : or_list
@@ -85,18 +85,14 @@ binary
     | binary MINUS binary
     | binary MULT binary
     | binary DIVIDE binary
+    | unary
 
 unary
-    : p_open expr p_close
-    | p_open unary p_close
-    | NUMBER_CONST
+    : NUMBER_CONST
     | STRING
     | single_tag
     | MINUS unary
-    | NOT unary
-
-p_open: COMMONTAG_OPEN_START P attribute_list TAG_END
-p_close: COMMONTAG_CLOSE_START P TAG_END
+    | NOT unary %prec MULT
 
 %%
 

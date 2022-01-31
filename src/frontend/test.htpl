@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <input name="condition" type="number" value="1" />
+
+    <a href="#ONE"><condition /></a>
+    <a href="#TWO" />
+
+    <hr id="ONE" />
+    <!--if statement-->
+    <a href="#THREE" />
+
+    <hr id="TWO">
+    <!--if statement-->
+    <hr id="THREE">
+</body>
+</html>

@@ -4,24 +4,20 @@
     <title>Document</title>
 </head>
 <body>
-    <input name="condition" type="number" value="1" />
+    
+    <input name="num" type="number" value="10" />
+    <input name="i" type="number" value="1"></input>
+    <input name="j" type="number" value="0" />
 
-    <a href="#ONE"><condition /> PLUS 1</a>
-    <a href="#TWO" />
-
-    <hr id="ONE" />
-    <!--if statement-->
-    <a href="#THREE" />
-
-    <hr id="TWO">
-    <!--if statement-->
-    <hr id="THREE">
-
-    <div>
-        3 PLUS 5
-    </div>
-    <div>
-        5 SAME WITH <p>"hello" PLUS 13</p>
-    </div>
+    <hr id="LOOP1" />
+        <j>0</j>
+        <hr id="LOOP2" />
+            <div>*</div>
+            <j><j /> PLUS 1</j>
+        <a href="#LOOP2"><j /> LESS THAN <i /></a>
+        <div>\n</div>
+        <i><i /> PLUS 1</i>
+    <a href="#LOOP1"><i /> LESS THAN <num /></a>
+    
 </body>
 </html>

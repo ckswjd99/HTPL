@@ -1,5 +1,4 @@
 #include "htpl.h"
-#include "stdlib.h"
 
 #define HASH_TABLE_SIZE 101
 

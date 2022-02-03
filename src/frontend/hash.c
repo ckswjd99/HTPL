@@ -19,7 +19,8 @@ decl* enter(int type, char* name, int length) {
         hashTable[hashIndex]->next = NULL;
         hashTable[hashIndex]->decl = (decl*)malloc(sizeof(decl));
         hashTable[hashIndex]->decl->name = name;
-        hashTable[hashIndex]->decl->type = type;
+        hashTable[hashIndex]->decl->value = (value*)malloc(sizeof(value));
+        hashTable[hashIndex]->decl->value->type = type;
 
         return hashTable[hashIndex]->decl;
     }
@@ -43,7 +44,9 @@ decl* enter(int type, char* name, int length) {
             enterList->next->next = NULL;
             enterList->next->decl = (decl*)malloc(sizeof(decl));
             enterList->next->decl->name = name;
-            enterList->next->decl->type = type;
+            enterList->next->decl->value = (value*)malloc(sizeof(value));
+            enterList->next->decl->value->type = type;
+
 
             return enterList->next->decl;
         }

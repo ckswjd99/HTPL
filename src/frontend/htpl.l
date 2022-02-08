@@ -3,7 +3,7 @@
 #include "htpl.tab.h"
 
 static int lineno = 1;
-int lexDebug = 0;
+int lexDebug = 1;
 %}
 
 white_space		[ \t]+

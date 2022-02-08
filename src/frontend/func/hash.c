@@ -1,13 +1,4 @@
-#include "htpl.h"
-
-#define HASH_TABLE_SIZE 101
-
-typedef struct hashNode {
-    struct hashNode* next;
-    decl* decl;
-} hashNode;
-
-static hashNode* hashTable[HASH_TABLE_SIZE];
+#include "../htpl.h"
 
 decl* enter(int type, char* name, int length) {
     int hashIndex = 0;

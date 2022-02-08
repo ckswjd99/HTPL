@@ -36,6 +36,16 @@ typedef struct decl {
     value* value;
 } decl;
 
+/* HASH TABLE*/
+#define HASH_TABLE_SIZE 101
+typedef struct hashNode {
+    struct hashNode* next;
+    decl* decl;
+} hashNode;
+
+static hashNode* hashTable[HASH_TABLE_SIZE];
+decl* enter(int type, char* name, int length);
+
 /* ATTRIBUTE HANDLER */
 typedef struct attrElement {
     char* name;
@@ -49,6 +59,7 @@ typedef struct attrNode {
 
 void freeAttrList(attrNode* list);
 int getAttrListLen(attrNode* list);
+attrNode* findAttrByName(attrNode* list, char* name);
 void printAttrList(attrNode* list);
 
 /* TAG STACK */

@@ -88,9 +88,9 @@ instruction
     {
       $$ = newOperation($1, $2, $3);
     }
-  | OP_BREAK
+  | OP_BREAK OPERAND
     {
-      $$ = newOperation($1, 0, 0);
+      $$ = newOperation($1, $2, 0);
     }
   | OP_PRINT OPERAND
     {

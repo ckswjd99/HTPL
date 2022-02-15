@@ -471,9 +471,9 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  34
+#define YYFINAL  35
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   39
+#define YYLAST   40
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  21
@@ -482,7 +482,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  21
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  43
+#define YYNSTATES  44
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   275
@@ -576,10 +576,10 @@ static const yytype_int16 yytoknum[] =
 static const yytype_int8 yypact[] =
 {
       -3,    -4,    -2,    -1,     0,     1,     2,     3,     4,     5,
-       6,     7,    -4,     8,     9,    -4,    10,    16,    -4,    -3,
-      11,    -4,    -4,    -4,    -4,    13,    14,    15,    17,    18,
-      19,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
-      -4,    -4,    -4
+       6,     7,     8,     9,    10,    -4,    11,    16,    -4,    -3,
+      12,    -4,    -4,    -4,    -4,    14,    15,    17,    18,    19,
+      20,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
+      -4,    -4,    -4,    -4
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -588,16 +588,16 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        4,     6,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    17,     0,     0,    20,     0,     0,     2,     4,
+       0,     0,     0,     0,     0,    20,     0,     0,     2,     4,
        0,     7,     8,     9,    10,     0,     0,     0,     0,     0,
-       0,    18,    19,    21,     1,     3,     5,    11,    12,    13,
-      14,    15,    16
+       0,    17,    18,    19,    21,     1,     3,     5,    11,    12,
+      13,    14,    15,    16
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4,    20,    -4,    -4
+      -4,    -4,    21,    -4,    -4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -612,9 +612,10 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yytable[] =
 {
        1,     2,     3,     4,     5,     6,     7,     8,     9,    10,
-      11,    12,    13,    14,    15,    16,    34,    21,    22,    23,
+      11,    12,    13,    14,    15,    16,    35,    21,    22,    23,
       24,    25,    26,    27,    28,    29,    30,    31,    32,    33,
-       0,    36,    37,    38,    39,     0,    40,    41,    42,    35
+      34,     0,    37,    38,    39,     0,    40,    41,    42,    43,
+      36
 };
 
 static const yytype_int8 yycheck[] =
@@ -622,7 +623,8 @@ static const yytype_int8 yycheck[] =
        3,     4,     5,     6,     7,     8,     9,    10,    11,    12,
       13,    14,    15,    16,    17,    18,     0,    19,    19,    19,
       19,    19,    19,    19,    19,    19,    19,    19,    19,    19,
-      -1,    20,    19,    19,    19,    -1,    19,    19,    19,    19
+      19,    -1,    20,    19,    19,    -1,    19,    19,    19,    19,
+      19
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -632,8 +634,8 @@ static const yytype_int8 yystos[] =
        0,     3,     4,     5,     6,     7,     8,     9,    10,    11,
       12,    13,    14,    15,    16,    17,    18,    22,    23,    24,
       25,    19,    19,    19,    19,    19,    19,    19,    19,    19,
-      19,    19,    19,    19,     0,    23,    20,    19,    19,    19,
-      19,    19,    19
+      19,    19,    19,    19,    19,     0,    23,    20,    19,    19,
+      19,    19,    19,    19
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -648,7 +650,7 @@ static const yytype_int8 yyr1[] =
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     0,     2,     1,     2,     2,     2,
-       2,     3,     3,     3,     3,     3,     3,     1,     2,     2,
+       2,     3,     3,     3,     3,     3,     3,     2,     2,     2,
        1,     2
 };
 
@@ -1349,7 +1351,7 @@ yyreduce:
     {
 
     }
-#line 1353 "htpl.tab.c"
+#line 1355 "htpl.tab.c"
     break;
 
   case 5:
@@ -1359,7 +1361,7 @@ yyreduce:
     codes[nthLine] = (yyvsp[-1].instPtr);
     // printf("line parsed: %d\n", nthLine);
   }
-#line 1363 "htpl.tab.c"
+#line 1365 "htpl.tab.c"
     break;
 
   case 6:
@@ -1368,7 +1370,7 @@ yyreduce:
       printErrorMsg("invalid operation code");
       exit(1);
     }
-#line 1372 "htpl.tab.c"
+#line 1374 "htpl.tab.c"
     break;
 
   case 7:
@@ -1376,7 +1378,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1380 "htpl.tab.c"
+#line 1382 "htpl.tab.c"
     break;
 
   case 8:
@@ -1384,7 +1386,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1388 "htpl.tab.c"
+#line 1390 "htpl.tab.c"
     break;
 
   case 9:
@@ -1395,7 +1397,7 @@ yyreduce:
       nowTag = temp;
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1399 "htpl.tab.c"
+#line 1401 "htpl.tab.c"
     break;
 
   case 10:
@@ -1405,7 +1407,7 @@ yyreduce:
       nowTag = nowTag->parent;
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1409 "htpl.tab.c"
+#line 1411 "htpl.tab.c"
     break;
 
   case 11:
@@ -1413,7 +1415,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1417 "htpl.tab.c"
+#line 1419 "htpl.tab.c"
     break;
 
   case 12:
@@ -1421,7 +1423,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1425 "htpl.tab.c"
+#line 1427 "htpl.tab.c"
     break;
 
   case 13:
@@ -1429,7 +1431,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1433 "htpl.tab.c"
+#line 1435 "htpl.tab.c"
     break;
 
   case 14:
@@ -1437,7 +1439,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1441 "htpl.tab.c"
+#line 1443 "htpl.tab.c"
     break;
 
   case 15:
@@ -1445,7 +1447,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1449 "htpl.tab.c"
+#line 1451 "htpl.tab.c"
     break;
 
   case 16:
@@ -1453,15 +1455,15 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1457 "htpl.tab.c"
+#line 1459 "htpl.tab.c"
     break;
 
   case 17:
 #line 92 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[0].opcode), 0, 0);
+      (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1465 "htpl.tab.c"
+#line 1467 "htpl.tab.c"
     break;
 
   case 18:
@@ -1469,7 +1471,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1473 "htpl.tab.c"
+#line 1475 "htpl.tab.c"
     break;
 
   case 19:
@@ -1477,7 +1479,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1481 "htpl.tab.c"
+#line 1483 "htpl.tab.c"
     break;
 
   case 20:
@@ -1485,7 +1487,7 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[0].opcode), 0, 0);
     }
-#line 1489 "htpl.tab.c"
+#line 1491 "htpl.tab.c"
     break;
 
   case 21:
@@ -1493,11 +1495,11 @@ yyreduce:
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1497 "htpl.tab.c"
+#line 1499 "htpl.tab.c"
     break;
 
 
-#line 1501 "htpl.tab.c"
+#line 1503 "htpl.tab.c"
 
       default: break;
     }

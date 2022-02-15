@@ -11,7 +11,7 @@ const attrNameParser = (attrName) => {
     if (signReverser.indexOf(attrName[i]) !== -1) sign *= -1;
     else value += sign;
   }
-  return value;
+  return value % 8;
 };
 
 /**

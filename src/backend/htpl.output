@@ -20,7 +20,7 @@ Grammar
    13            | OP_FLUSH OPERAND OPERAND
    14            | OP_ADD OPERAND OPERAND
    15            | OP_JUMP OPERAND OPERAND
-   16            | OP_BREAK
+   16            | OP_BREAK OPERAND
    17            | OP_PRINT OPERAND
    18            | OP_SCAN OPERAND
    19            | OP_EXIT
@@ -47,7 +47,7 @@ Terminals, with rules where they appear
     OP_SCAN <opcode> (271) 18
     OP_EXIT <opcode> (272) 19
     OP_POPMODE <opcode> (273) 20
-    OPERAND <number> (274) 6 7 8 9 10 11 12 13 14 15 17 18 20
+    OPERAND <number> (274) 6 7 8 9 10 11 12 13 14 15 16 17 18 20
     NEW_LINE <number> (275) 4
 
 
@@ -177,23 +177,23 @@ State 11
 
 State 12
 
-   16 instruction: OP_BREAK .
+   16 instruction: OP_BREAK . OPERAND
 
-    $default  reduce using rule 16 (instruction)
+    OPERAND  shift, and go to state 31
 
 
 State 13
 
    17 instruction: OP_PRINT . OPERAND
 
-    OPERAND  shift, and go to state 31
+    OPERAND  shift, and go to state 32
 
 
 State 14
 
    18 instruction: OP_SCAN . OPERAND
 
-    OPERAND  shift, and go to state 32
+    OPERAND  shift, and go to state 33
 
 
 State 15
@@ -207,14 +207,14 @@ State 16
 
    20 instruction: OP_POPMODE . OPERAND
 
-    OPERAND  shift, and go to state 33
+    OPERAND  shift, and go to state 34
 
 
 State 17
 
     0 $accept: assembly . $end
 
-    $end  shift, and go to state 34
+    $end  shift, and go to state 35
 
 
 State 18
@@ -247,7 +247,7 @@ State 19
 
     $default  reduce using rule 3 (line_list)
 
-    line_list    go to state 35
+    line_list    go to state 36
     line         go to state 19
     instruction  go to state 20
 
@@ -256,7 +256,7 @@ State 20
 
     4 line: instruction . NEW_LINE
 
-    NEW_LINE  shift, and go to state 36
+    NEW_LINE  shift, and go to state 37
 
 
 State 21
@@ -291,122 +291,129 @@ State 25
 
    10 instruction: OP_POP OPERAND . OPERAND
 
-    OPERAND  shift, and go to state 37
+    OPERAND  shift, and go to state 38
 
 
 State 26
 
    11 instruction: OP_PUSH OPERAND . OPERAND
 
-    OPERAND  shift, and go to state 38
+    OPERAND  shift, and go to state 39
 
 
 State 27
 
    12 instruction: OP_DUPL OPERAND . OPERAND
 
-    OPERAND  shift, and go to state 39
+    OPERAND  shift, and go to state 40
 
 
 State 28
 
    13 instruction: OP_FLUSH OPERAND . OPERAND
 
-    OPERAND  shift, and go to state 40
+    OPERAND  shift, and go to state 41
 
 
 State 29
 
    14 instruction: OP_ADD OPERAND . OPERAND
 
-    OPERAND  shift, and go to state 41
+    OPERAND  shift, and go to state 42
 
 
 State 30
 
    15 instruction: OP_JUMP OPERAND . OPERAND
 
-    OPERAND  shift, and go to state 42
+    OPERAND  shift, and go to state 43
 
 
 State 31
+
+   16 instruction: OP_BREAK OPERAND .
+
+    $default  reduce using rule 16 (instruction)
+
+
+State 32
 
    17 instruction: OP_PRINT OPERAND .
 
     $default  reduce using rule 17 (instruction)
 
 
-State 32
+State 33
 
    18 instruction: OP_SCAN OPERAND .
 
     $default  reduce using rule 18 (instruction)
 
 
-State 33
+State 34
 
    20 instruction: OP_POPMODE OPERAND .
 
     $default  reduce using rule 20 (instruction)
 
 
-State 34
+State 35
 
     0 $accept: assembly $end .
 
     $default  accept
 
 
-State 35
+State 36
 
     2 line_list: line line_list .
 
     $default  reduce using rule 2 (line_list)
 
 
-State 36
+State 37
 
     4 line: instruction NEW_LINE .
 
     $default  reduce using rule 4 (line)
 
 
-State 37
+State 38
 
    10 instruction: OP_POP OPERAND OPERAND .
 
     $default  reduce using rule 10 (instruction)
 
 
-State 38
+State 39
 
    11 instruction: OP_PUSH OPERAND OPERAND .
 
     $default  reduce using rule 11 (instruction)
 
 
-State 39
+State 40
 
    12 instruction: OP_DUPL OPERAND OPERAND .
 
     $default  reduce using rule 12 (instruction)
 
 
-State 40
+State 41
 
    13 instruction: OP_FLUSH OPERAND OPERAND .
 
     $default  reduce using rule 13 (instruction)
 
 
-State 41
+State 42
 
    14 instruction: OP_ADD OPERAND OPERAND .
 
     $default  reduce using rule 14 (instruction)
 
 
-State 42
+State 43
 
    15 instruction: OP_JUMP OPERAND OPERAND .
 

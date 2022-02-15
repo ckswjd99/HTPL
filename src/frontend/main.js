@@ -13,9 +13,17 @@ const main = (argv) => {
   const source = sourceAbsolute || sourceRelative;
   if (!source) throw new Error('Source not exists!');
 
-  // parse source
+  // prepare output file
+  const sourceName = path.parse(path.basename(sourcePath))
+  const outputDirectory = path.parse(sourcePath).dir;
+  const outputFilePath = path.join(outputDirectory, sourceName.name.concat('.htal'));
+
+  // generate code
   const parsedDOM = new Document(source);
-  parsedDOM.body.printRecursive();
+  const outputString = parsedDOM.generateCode();
+
+  // write code
+  fs.writeFileSync(outputFilePath, outputString);
 };
 
 main(commandLineArguments);

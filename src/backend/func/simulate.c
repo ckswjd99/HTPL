@@ -88,8 +88,10 @@ void simulate() {
         break;
       }
       case OP_ORDER_FLUSH: {
+        // printf("FLUSH(%d) %d %d ", lists[nowOperation->operand1]->size, nowOperation->operand1, nowOperation->operand2);
         for(int i=0; i<nowOperation->operand2; i++) deleteFront(lists[nowOperation->operand1]);
-        
+        // printf("so size %d\n", lists[nowOperation->operand1]->size);
+
         pc++;
         break;
       }
@@ -128,9 +130,16 @@ void simulate() {
         break;
       }
       case OP_ORDER_BREAK: {
-        nowTag = nowTag->parent;
-        
-        pc = nowTag->closingLine;
+        LinkedListNode* temp = popMode == 1 ? popFront(lists[nowOperation->operand1]) : duplFront(lists[nowOperation->operand1]);
+        if(temp->data == 0) {
+          deleteBack(tagStack);
+          nowTag = nowTag->parent;
+          pc = nowTag->closingLine;
+        }
+        else {
+          pc++;
+        }
+
         break;
       }
       case OP_ORDER_PRINT: {

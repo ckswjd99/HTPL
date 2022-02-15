@@ -1,5 +1,6 @@
 const { JSDOM } = require('jsdom');
 const Element = require('./element');
+const { OP_BUFFER, OP_TAG, instructionString, OP_EXIT } = require('../utils/intermediate')
 
 class Document {
   constructor(rawText) {
@@ -22,8 +23,23 @@ class Document {
     Element.recursivePrint(this.parsed)
   }
 
-  codeGenerate() {
-    Element.recursiveCodeGenerate(this.parsed)
+  generateCode() {
+    const variableToNum = new Map();
+    const variableNames = Array.from(this.usedVariables);
+    for (let i = 0; i < variableNames.length; i += 1) {
+      variableToNum.set(variableNames[i], i + 1);
+    }
+
+    const instructions = [];
+
+    instructions.push(instructionString(OP_BUFFER, this.inputBufferLength));
+    instructions.push(instructionString(OP_TAG, this.usedVariables.size));
+
+    Element.generateCode(this.parsed, variableToNum, instructions);
+
+    instructions.push(instructionString(OP_EXIT));
+
+    return instructions.join("");
   }
 }
 

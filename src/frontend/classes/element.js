@@ -1,5 +1,25 @@
 /* eslint-disable no-param-reassign */
 const Attribute = require('./attribute');
+const { attrNameParser, attrValueParser } = require('../utils/parser')
+const {
+  OP_ERROR,
+  OP_BUFFER,
+  OP_TAG,
+  OP_OPEN,
+  OP_CLOSE,
+  OP_POP,
+  OP_PUSH,
+  OP_DUPL,
+  OP_FLUSH,
+  OP_ADD,
+  OP_JUMP,
+  OP_BREAK,
+  OP_PRINT,
+  OP_SCAN,
+  OP_EXIT,
+  OP_POPMODE,
+  instructionString
+} = require('../utils/intermediate')
 
 class Element {
   constructor(tagName, attributes) {
@@ -52,6 +72,76 @@ class Element {
     set.add(elem.tag)
     elem.children.forEach(child => Element.usedVariables(child, set))
     return set
+  }
+
+  static generateCode(elem, variableToNum, instructions) {
+    const elemIndex = variableToNum.get(elem.tag);
+    const parentIndex = elem.parent ? variableToNum.get(elem.parent.tag) : 0;
+
+    let popMode = 1;
+    const instAfterOpen = [];
+    const instAfterClose = [];
+
+    // make instructions
+    elem.attributes.forEach(attr => {
+      const operation = attrNameParser(attr.name)
+      const value = attrValueParser(attr.value)
+      switch (operation) {
+        case 0: { // Print
+          instAfterOpen.push(instructionString(OP_POPMODE, popMode));
+          instAfterOpen.push(instructionString(OP_POP, elemIndex, 0));
+          instAfterOpen.push(instructionString(OP_POPMODE, 1));
+          instAfterOpen.push(instructionString(OP_ADD, 0, value));
+          instAfterOpen.push(instructionString(OP_PRINT, 0));
+          instAfterOpen.push(instructionString(OP_POPMODE, popMode));
+          break;
+        }
+        case 1: { // Input
+          instAfterOpen.push(instructionString(OP_SCAN, elemIndex));
+          break;
+        }
+        case 2: { // Flush
+          instAfterOpen.push(instructionString(OP_FLUSH, elemIndex, value));
+          break;
+        }
+        case 3: { // Add
+          instAfterOpen.push(instructionString(OP_ADD, elemIndex, value));
+          break;
+        }
+        case 4: { // Offset
+          instAfterOpen.push(instructionString(OP_PUSH, elemIndex, value));
+          break;
+        }
+        case 5: { // Conditional Jump
+          instAfterOpen.push(instructionString(OP_JUMP, elemIndex, value));
+          break;
+        }
+        case 6: { // Conditional Break
+          instAfterOpen.push(instructionString(OP_BREAK, elemIndex));
+          break;
+        }
+        case 7: { // Pop Mode
+          instAfterOpen.push(instructionString(OP_POPMODE, value));
+          popMode = value === 0 ? 0 : 1;
+          break;
+        }
+        default: {
+
+          break;
+        }
+      }
+    })
+
+    instAfterClose.push(instructionString(OP_POPMODE, popMode))
+    instAfterClose.push(instructionString(OP_POP, elemIndex, parentIndex))
+
+    instructions.push(instructionString(OP_OPEN, elemIndex))
+    instructions.push(instructionString(OP_POPMODE, 1))
+    instructions.push(...instAfterOpen)
+    elem.children.forEach(child => Element.generateCode(child, variableToNum, instructions))
+    instructions.push(instructionString(OP_CLOSE, elemIndex))
+    instructions.push(...instAfterClose)
+
   }
 }
 

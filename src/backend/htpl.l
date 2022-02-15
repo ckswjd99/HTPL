@@ -111,6 +111,7 @@ int main(int argc, char* argv[]) {
 
 	yyparse();
   
+  // printf("parsed!\n");
   simulate();
 
 	fclose(yyin);

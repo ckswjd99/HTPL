@@ -9,6 +9,7 @@ const main = () => {
   const doc = new Document(text);
 
   doc.print()
+  console.log(doc.usedVariables)
 }
 
 main()

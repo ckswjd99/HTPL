@@ -12,7 +12,10 @@ class Document {
     this.document = document;
 
     this.inputBufferLength = this.document.head.children.length;
+
     this.parsed = Element.parse(this.document.body)
+
+    this.usedVariables = Element.usedVariables(this.parsed, new Set())
   }
 
   print() {

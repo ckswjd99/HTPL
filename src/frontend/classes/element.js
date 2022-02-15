@@ -48,8 +48,10 @@ class Element {
     console.log(`TAG CLOSE: ${elem.tag}`);
   }
 
-  static recursiveCodeGenerate(elem) {
-
+  static usedVariables(elem, set) {
+    set.add(elem.tag)
+    elem.children.forEach(child => Element.usedVariables(child, set))
+    return set
   }
 }
 

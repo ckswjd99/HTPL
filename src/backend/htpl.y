@@ -10,11 +10,10 @@ int yyerror(char* s);
 %union {
   int opcode;
   char number;
-  char* charPtr;
   Operation* instPtr;
 }
 
-%token<opcode> OP_ERROR OP_BUFFER OP_TAG OP_OPEN OP_CLOSE OP_POP OP_PUSH OP_DUPL OP_STASH OP_ADD OP_JUMP OP_BREAK OP_PRINT OP_SCAN OP_EXIT
+%token<opcode> OP_ERROR OP_BUFFER OP_TAG OP_OPEN OP_CLOSE OP_POP OP_PUSH OP_DUPL OP_FLUSH OP_ADD OP_JUMP OP_BREAK OP_PRINT OP_SCAN OP_EXIT OP_POPMODE
 %token<number> OPERAND NEW_LINE
 %type<instPtr> instruction
 
@@ -67,31 +66,31 @@ instruction
     }
   | OP_POP OPERAND OPERAND
     {
-      $$ = newOperation($1, $2, $3, 0);
+      $$ = newOperation($1, $2, $3);
     }
   | OP_PUSH OPERAND OPERAND
     {
-      $$ = newOperation($1, $2, $3, 0);
+      $$ = newOperation($1, $2, $3);
     }
   | OP_DUPL OPERAND OPERAND
     {
-      $$ = newOperation($1, $2, $3, 0);
+      $$ = newOperation($1, $2, $3);
     }
-  | OP_STASH OPERAND OPERAND
+  | OP_FLUSH OPERAND OPERAND
     {
-      $$ = newOperation($1, $2, $3, 0);
+      $$ = newOperation($1, $2, $3);
     }
   | OP_ADD OPERAND OPERAND
     {
-      $$ = newOperation($1, $2, $3, 0);
+      $$ = newOperation($1, $2, $3);
     }
   | OP_JUMP OPERAND OPERAND
     {
-      $$ = newOperation($1, $2, $3, 0);
+      $$ = newOperation($1, $2, $3);
     }
   | OP_BREAK
     {
-      $$ = newOperation($1, 0);
+      $$ = newOperation($1, 0, 0);
     }
   | OP_PRINT OPERAND
     {
@@ -103,7 +102,11 @@ instruction
     }
   | OP_EXIT
     {
-      $$ = newOperation($1, 0);
+      $$ = newOperation($1, 0, 0);
+    }
+  | OP_POPMODE OPERAND
+    {
+      $$ = newOperation($1, $2, 0);
     }
 %%
 

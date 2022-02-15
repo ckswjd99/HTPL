@@ -57,15 +57,16 @@ extern int yydebug;
     OP_POP = 263,
     OP_PUSH = 264,
     OP_DUPL = 265,
-    OP_STASH = 266,
+    OP_FLUSH = 266,
     OP_ADD = 267,
     OP_JUMP = 268,
     OP_BREAK = 269,
     OP_PRINT = 270,
     OP_SCAN = 271,
     OP_EXIT = 272,
-    OPERAND = 273,
-    NEW_LINE = 274
+    OP_POPMODE = 273,
+    OPERAND = 274,
+    NEW_LINE = 275
   };
 #endif
 
@@ -77,7 +78,6 @@ union YYSTYPE
 
   int opcode;
   char number;
-  char* charPtr;
   Operation* instPtr;
 
 #line 84 "htpl.tab.h"

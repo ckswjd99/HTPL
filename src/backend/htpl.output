@@ -17,13 +17,14 @@ Grammar
    10            | OP_POP OPERAND OPERAND
    11            | OP_PUSH OPERAND OPERAND
    12            | OP_DUPL OPERAND OPERAND
-   13            | OP_STASH OPERAND OPERAND
+   13            | OP_FLUSH OPERAND OPERAND
    14            | OP_ADD OPERAND OPERAND
    15            | OP_JUMP OPERAND OPERAND
    16            | OP_BREAK
    17            | OP_PRINT OPERAND
    18            | OP_SCAN OPERAND
    19            | OP_EXIT
+   20            | OP_POPMODE OPERAND
 
 
 Terminals, with rules where they appear
@@ -38,32 +39,33 @@ Terminals, with rules where they appear
     OP_POP <opcode> (263) 10
     OP_PUSH <opcode> (264) 11
     OP_DUPL <opcode> (265) 12
-    OP_STASH <opcode> (266) 13
+    OP_FLUSH <opcode> (266) 13
     OP_ADD <opcode> (267) 14
     OP_JUMP <opcode> (268) 15
     OP_BREAK <opcode> (269) 16
     OP_PRINT <opcode> (270) 17
     OP_SCAN <opcode> (271) 18
     OP_EXIT <opcode> (272) 19
-    OPERAND <number> (273) 6 7 8 9 10 11 12 13 14 15 17 18
-    NEW_LINE <number> (274) 4
+    OP_POPMODE <opcode> (273) 20
+    OPERAND <number> (274) 6 7 8 9 10 11 12 13 14 15 17 18 20
+    NEW_LINE <number> (275) 4
 
 
 Nonterminals, with rules where they appear
 
-    $accept (20)
+    $accept (21)
         on left: 0
-    assembly (21)
+    assembly (22)
         on left: 1
         on right: 0
-    line_list (22)
+    line_list (23)
         on left: 2 3
         on right: 1 2
-    line (23)
+    line (24)
         on left: 4
         on right: 2
-    instruction <instPtr> (24)
-        on left: 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+    instruction <instPtr> (25)
+        on left: 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
         on right: 4
 
 
@@ -71,28 +73,29 @@ State 0
 
     0 $accept: . assembly $end
 
-    OP_ERROR   shift, and go to state 1
-    OP_BUFFER  shift, and go to state 2
-    OP_TAG     shift, and go to state 3
-    OP_OPEN    shift, and go to state 4
-    OP_CLOSE   shift, and go to state 5
-    OP_POP     shift, and go to state 6
-    OP_PUSH    shift, and go to state 7
-    OP_DUPL    shift, and go to state 8
-    OP_STASH   shift, and go to state 9
-    OP_ADD     shift, and go to state 10
-    OP_JUMP    shift, and go to state 11
-    OP_BREAK   shift, and go to state 12
-    OP_PRINT   shift, and go to state 13
-    OP_SCAN    shift, and go to state 14
-    OP_EXIT    shift, and go to state 15
+    OP_ERROR    shift, and go to state 1
+    OP_BUFFER   shift, and go to state 2
+    OP_TAG      shift, and go to state 3
+    OP_OPEN     shift, and go to state 4
+    OP_CLOSE    shift, and go to state 5
+    OP_POP      shift, and go to state 6
+    OP_PUSH     shift, and go to state 7
+    OP_DUPL     shift, and go to state 8
+    OP_FLUSH    shift, and go to state 9
+    OP_ADD      shift, and go to state 10
+    OP_JUMP     shift, and go to state 11
+    OP_BREAK    shift, and go to state 12
+    OP_PRINT    shift, and go to state 13
+    OP_SCAN     shift, and go to state 14
+    OP_EXIT     shift, and go to state 15
+    OP_POPMODE  shift, and go to state 16
 
     $default  reduce using rule 3 (line_list)
 
-    assembly     go to state 16
-    line_list    go to state 17
-    line         go to state 18
-    instruction  go to state 19
+    assembly     go to state 17
+    line_list    go to state 18
+    line         go to state 19
+    instruction  go to state 20
 
 
 State 1
@@ -106,70 +109,70 @@ State 2
 
     6 instruction: OP_BUFFER . OPERAND
 
-    OPERAND  shift, and go to state 20
+    OPERAND  shift, and go to state 21
 
 
 State 3
 
     7 instruction: OP_TAG . OPERAND
 
-    OPERAND  shift, and go to state 21
+    OPERAND  shift, and go to state 22
 
 
 State 4
 
     8 instruction: OP_OPEN . OPERAND
 
-    OPERAND  shift, and go to state 22
+    OPERAND  shift, and go to state 23
 
 
 State 5
 
     9 instruction: OP_CLOSE . OPERAND
 
-    OPERAND  shift, and go to state 23
+    OPERAND  shift, and go to state 24
 
 
 State 6
 
    10 instruction: OP_POP . OPERAND OPERAND
 
-    OPERAND  shift, and go to state 24
+    OPERAND  shift, and go to state 25
 
 
 State 7
 
    11 instruction: OP_PUSH . OPERAND OPERAND
 
-    OPERAND  shift, and go to state 25
+    OPERAND  shift, and go to state 26
 
 
 State 8
 
    12 instruction: OP_DUPL . OPERAND OPERAND
 
-    OPERAND  shift, and go to state 26
+    OPERAND  shift, and go to state 27
 
 
 State 9
 
-   13 instruction: OP_STASH . OPERAND OPERAND
+   13 instruction: OP_FLUSH . OPERAND OPERAND
 
-    OPERAND  shift, and go to state 27
+    OPERAND  shift, and go to state 28
 
 
 State 10
 
    14 instruction: OP_ADD . OPERAND OPERAND
 
-    OPERAND  shift, and go to state 28
+    OPERAND  shift, and go to state 29
 
 
 State 11
 
    15 instruction: OP_JUMP . OPERAND OPERAND
 
-    OPERAND  shift, and go to state 29
+    OPERAND  shift, and go to state 30
 
 
 State 12
@@ -183,14 +186,14 @@ State 13
 
    17 instruction: OP_PRINT . OPERAND
 
-    OPERAND  shift, and go to state 30
+    OPERAND  shift, and go to state 31
 
 
 State 14
 
    18 instruction: OP_SCAN . OPERAND
 
-    OPERAND  shift, and go to state 31
+    OPERAND  shift, and go to state 32
 
 
 State 15
@@ -202,193 +205,208 @@ State 15
 
 State 16
 
-    0 $accept: assembly . $end
+   20 instruction: OP_POPMODE . OPERAND
 
-    $end  shift, and go to state 32
+    OPERAND  shift, and go to state 33
 
 
 State 17
+
+    0 $accept: assembly . $end
+
+    $end  shift, and go to state 34
+
+
+State 18
 
     1 assembly: line_list .
 
     $default  reduce using rule 1 (assembly)
 
 
-State 18
+State 19
 
     2 line_list: line . line_list
 
-    OP_ERROR   shift, and go to state 1
-    OP_BUFFER  shift, and go to state 2
-    OP_TAG     shift, and go to state 3
-    OP_OPEN    shift, and go to state 4
-    OP_CLOSE   shift, and go to state 5
-    OP_POP     shift, and go to state 6
-    OP_PUSH    shift, and go to state 7
-    OP_DUPL    shift, and go to state 8
-    OP_STASH   shift, and go to state 9
-    OP_ADD     shift, and go to state 10
-    OP_JUMP    shift, and go to state 11
-    OP_BREAK   shift, and go to state 12
-    OP_PRINT   shift, and go to state 13
-    OP_SCAN    shift, and go to state 14
-    OP_EXIT    shift, and go to state 15
+    OP_ERROR    shift, and go to state 1
+    OP_BUFFER   shift, and go to state 2
+    OP_TAG      shift, and go to state 3
+    OP_OPEN     shift, and go to state 4
+    OP_CLOSE    shift, and go to state 5
+    OP_POP      shift, and go to state 6
+    OP_PUSH     shift, and go to state 7
+    OP_DUPL     shift, and go to state 8
+    OP_FLUSH    shift, and go to state 9
+    OP_ADD      shift, and go to state 10
+    OP_JUMP     shift, and go to state 11
+    OP_BREAK    shift, and go to state 12
+    OP_PRINT    shift, and go to state 13
+    OP_SCAN     shift, and go to state 14
+    OP_EXIT     shift, and go to state 15
+    OP_POPMODE  shift, and go to state 16
 
     $default  reduce using rule 3 (line_list)
 
-    line_list    go to state 33
-    line         go to state 18
-    instruction  go to state 19
-
-
-State 19
-
-    4 line: instruction . NEW_LINE
-
-    NEW_LINE  shift, and go to state 34
+    line_list    go to state 35
+    line         go to state 19
+    instruction  go to state 20
 
 
 State 20
+
+    4 line: instruction . NEW_LINE
+
+    NEW_LINE  shift, and go to state 36
+
+
+State 21
 
     6 instruction: OP_BUFFER OPERAND .
 
     $default  reduce using rule 6 (instruction)
 
 
-State 21
+State 22
 
     7 instruction: OP_TAG OPERAND .
 
     $default  reduce using rule 7 (instruction)
 
 
-State 22
+State 23
 
     8 instruction: OP_OPEN OPERAND .
 
     $default  reduce using rule 8 (instruction)
 
 
-State 23
+State 24
 
     9 instruction: OP_CLOSE OPERAND .
 
     $default  reduce using rule 9 (instruction)
 
 
-State 24
-
-   10 instruction: OP_POP OPERAND . OPERAND
-
-    OPERAND  shift, and go to state 35
-
-
 State 25
 
-   11 instruction: OP_PUSH OPERAND . OPERAND
-
-    OPERAND  shift, and go to state 36
-
-
-State 26
-
-   12 instruction: OP_DUPL OPERAND . OPERAND
+   10 instruction: OP_POP OPERAND . OPERAND
 
     OPERAND  shift, and go to state 37
 
 
-State 27
+State 26
 
-   13 instruction: OP_STASH OPERAND . OPERAND
+   11 instruction: OP_PUSH OPERAND . OPERAND
 
     OPERAND  shift, and go to state 38
 
 
-State 28
+State 27
 
-   14 instruction: OP_ADD OPERAND . OPERAND
+   12 instruction: OP_DUPL OPERAND . OPERAND
 
     OPERAND  shift, and go to state 39
 
 
-State 29
+State 28
 
-   15 instruction: OP_JUMP OPERAND . OPERAND
+   13 instruction: OP_FLUSH OPERAND . OPERAND
 
     OPERAND  shift, and go to state 40
 
 
+State 29
+
+   14 instruction: OP_ADD OPERAND . OPERAND
+
+    OPERAND  shift, and go to state 41
+
+
 State 30
+
+   15 instruction: OP_JUMP OPERAND . OPERAND
+
+    OPERAND  shift, and go to state 42
+
+
+State 31
 
    17 instruction: OP_PRINT OPERAND .
 
     $default  reduce using rule 17 (instruction)
 
 
-State 31
+State 32
 
    18 instruction: OP_SCAN OPERAND .
 
     $default  reduce using rule 18 (instruction)
 
 
-State 32
+State 33
+
+   20 instruction: OP_POPMODE OPERAND .
+
+    $default  reduce using rule 20 (instruction)
+
+
+State 34
 
     0 $accept: assembly $end .
 
     $default  accept
 
 
-State 33
+State 35
 
     2 line_list: line line_list .
 
     $default  reduce using rule 2 (line_list)
 
 
-State 34
+State 36
 
     4 line: instruction NEW_LINE .
 
     $default  reduce using rule 4 (line)
 
 
-State 35
+State 37
 
    10 instruction: OP_POP OPERAND OPERAND .
 
     $default  reduce using rule 10 (instruction)
 
 
-State 36
+State 38
 
    11 instruction: OP_PUSH OPERAND OPERAND .
 
     $default  reduce using rule 11 (instruction)
 
 
-State 37
+State 39
 
    12 instruction: OP_DUPL OPERAND OPERAND .
 
     $default  reduce using rule 12 (instruction)
 
 
-State 38
+State 40
 
-   13 instruction: OP_STASH OPERAND OPERAND .
+   13 instruction: OP_FLUSH OPERAND OPERAND .
 
     $default  reduce using rule 13 (instruction)
 
 
-State 39
+State 41
 
    14 instruction: OP_ADD OPERAND OPERAND .
 
     $default  reduce using rule 14 (instruction)
 
 
-State 40
+State 42
 
    15 instruction: OP_JUMP OPERAND OPERAND .
 

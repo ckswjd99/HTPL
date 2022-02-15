@@ -17,13 +17,14 @@
 #define OP_ORDER_POP 5
 #define OP_ORDER_PUSH 6
 #define OP_ORDER_DUPL 7
-#define OP_ORDER_STASH 8
+#define OP_ORDER_FLUSH 8
 #define OP_ORDER_ADD 9
 #define OP_ORDER_JUMP 10
 #define OP_ORDER_BREAK 11
 #define OP_ORDER_PRINT 12
 #define OP_ORDER_SCAN 13
 #define OP_ORDER_EXIT 14
+#define OP_ORDER_POPMODE 15
 
 typedef struct Operation
 {
@@ -33,7 +34,7 @@ typedef struct Operation
 } Operation;
 
 int parseOpcode(char* operation);
-Operation* newOperation(int opcode, ...);
+Operation* newOperation(int opcode, char, char);
 void printOperation(Operation* operation);
 Operation **codes;
 
@@ -57,6 +58,7 @@ LinkedList *newLinkedList();
 LinkedListNode *popFront(LinkedList *linkedList);
 LinkedListNode *popBack(LinkedList *linkedList);
 LinkedListNode *duplFront(LinkedList *linkedList);
+LinkedListNode *duplSecond(LinkedList *linkedList);
 LinkedListNode *getLast(LinkedList *linkedList);
 void pushBack(LinkedList *linkedList, LinkedListNode *value);
 void deleteFront(LinkedList *linkedList);
@@ -105,6 +107,8 @@ int listsLength;
 TagTree tagTree;
 TagTreeNode* nowTag;
 LinkedList* tagStack;
+
+int popMode;
 
 void init();
 void simulate();

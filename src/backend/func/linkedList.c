@@ -62,6 +62,25 @@ LinkedListNode *duplFront(LinkedList *linkedList) {
   return temp;
 }
 
+LinkedListNode *duplSecond(LinkedList *linkedList) {
+  LinkedListNode* temp = (LinkedListNode*)malloc(sizeof(LinkedListNode));
+  if(linkedList->size < 2) {
+    temp->data = 0;
+    temp->next = NULL;  
+  }
+  else {
+    temp->data = linkedList->head->next->next->data;
+    temp->next = NULL;
+  }
+  return temp;
+}
+
+LinkedListNode *getLast(LinkedList *linkedList) {
+  LinkedListNode* temp = linkedList->head;
+  while(temp->next != NULL) temp = temp->next;
+  return temp;
+}
+
 void pushBack(LinkedList *linkedList, LinkedListNode *node) {
   LinkedListNode* temp = linkedList->head;
   while(temp->next != NULL) {

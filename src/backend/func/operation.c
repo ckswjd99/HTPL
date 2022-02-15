@@ -1,7 +1,7 @@
 #include "../htpl.h"
 
 const char* rawOperations[] = {
-  "NULL", "BUFFER", "TAG", "OPEN", "CLOSE", "POP", "PUSH", "DUPL", "STASH", "ADD", "JUMP", "BREAK", "PRINT", "SCAN", "EXIT", NULL
+  "NULL", "BUFFER", "TAG", "OPEN", "CLOSE", "POP", "PUSH", "DUPL", "FLUSH", "ADD", "JUMP", "BREAK", "PRINT", "SCAN", "EXIT", "POPMODE", NULL
 };
 
 int parseOpcode(char* operation) {
@@ -15,20 +15,11 @@ int parseOpcode(char* operation) {
   return OP_ORDER_ERROR;
 }
 
-Operation* newOperation(int opcode, ...) {
+Operation* newOperation(int opcode, char operand1, char operand2) {
   Operation* temp = (Operation*)malloc(sizeof(Operation));
   temp->opcode = opcode;
-  
-  va_list ap;
-  va_start(ap, opcode);
-  
-  char tempChar = va_arg(ap, int);
-  if(tempChar == 0) return temp;
-  else temp->operand1 = tempChar;
-
-  tempChar = va_arg(ap, int);
-  if(tempChar == 0) return temp;
-  else temp->operand2 = tempChar;
+  temp->operand1 = operand1;
+  temp->operand2 = operand2;
 
   return temp;
 }

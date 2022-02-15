@@ -131,15 +131,16 @@ extern int yydebug;
     OP_POP = 263,
     OP_PUSH = 264,
     OP_DUPL = 265,
-    OP_STASH = 266,
+    OP_FLUSH = 266,
     OP_ADD = 267,
     OP_JUMP = 268,
     OP_BREAK = 269,
     OP_PRINT = 270,
     OP_SCAN = 271,
     OP_EXIT = 272,
-    OPERAND = 273,
-    NEW_LINE = 274
+    OP_POPMODE = 273,
+    OPERAND = 274,
+    NEW_LINE = 275
   };
 #endif
 
@@ -151,7 +152,6 @@ union YYSTYPE
 
   int opcode;
   char number;
-  char* charPtr;
   Operation* instPtr;
 
 #line 158 "htpl.tab.c"
@@ -471,21 +471,21 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  32
+#define YYFINAL  34
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   37
+#define YYLAST   39
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  20
+#define YYNTOKENS  21
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  20
+#define YYNRULES  21
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  41
+#define YYNSTATES  43
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   274
+#define YYMAXUTOK   275
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -524,16 +524,16 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19
+      15,    16,    17,    18,    19,    20
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    23,    23,    27,    31,    35,    42,    47,    51,    55,
-      62,    68,    72,    76,    80,    84,    88,    92,    96,   100,
-     104
+       0,    22,    22,    26,    30,    34,    41,    46,    50,    54,
+      61,    67,    71,    75,    79,    83,    87,    91,    95,    99,
+     103,   107
 };
 #endif
 
@@ -543,10 +543,10 @@ static const yytype_int8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "OP_ERROR", "OP_BUFFER", "OP_TAG",
-  "OP_OPEN", "OP_CLOSE", "OP_POP", "OP_PUSH", "OP_DUPL", "OP_STASH",
+  "OP_OPEN", "OP_CLOSE", "OP_POP", "OP_PUSH", "OP_DUPL", "OP_FLUSH",
   "OP_ADD", "OP_JUMP", "OP_BREAK", "OP_PRINT", "OP_SCAN", "OP_EXIT",
-  "OPERAND", "NEW_LINE", "$accept", "assembly", "line_list", "line",
-  "instruction", YY_NULLPTR
+  "OP_POPMODE", "OPERAND", "NEW_LINE", "$accept", "assembly", "line_list",
+  "line", "instruction", YY_NULLPTR
 };
 #endif
 
@@ -556,7 +556,8 @@ static const char *const yytname[] =
 static const yytype_int16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275
 };
 # endif
 
@@ -575,10 +576,10 @@ static const yytype_int16 yytoknum[] =
 static const yytype_int8 yypact[] =
 {
       -3,    -4,    -2,    -1,     0,     1,     2,     3,     4,     5,
-       6,     7,    -4,     8,     9,    -4,    15,    -4,    -3,    10,
-      -4,    -4,    -4,    -4,    12,    13,    14,    16,    17,    18,
-      -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
-      -4
+       6,     7,    -4,     8,     9,    -4,    10,    16,    -4,    -3,
+      11,    -4,    -4,    -4,    -4,    13,    14,    15,    17,    18,
+      19,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
+      -4,    -4,    -4
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -587,22 +588,22 @@ static const yytype_int8 yypact[] =
 static const yytype_int8 yydefact[] =
 {
        4,     6,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    17,     0,     0,    20,     0,     2,     4,     0,
-       7,     8,     9,    10,     0,     0,     0,     0,     0,     0,
-      18,    19,     1,     3,     5,    11,    12,    13,    14,    15,
-      16
+       0,     0,    17,     0,     0,    20,     0,     0,     2,     4,
+       0,     7,     8,     9,    10,     0,     0,     0,     0,     0,
+       0,    18,    19,    21,     1,     3,     5,    11,    12,    13,
+      14,    15,    16
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4,    19,    -4,    -4
+      -4,    -4,    20,    -4,    -4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,    16,    17,    18,    19
+      -1,    17,    18,    19,    20
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -611,17 +612,17 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yytable[] =
 {
        1,     2,     3,     4,     5,     6,     7,     8,     9,    10,
-      11,    12,    13,    14,    15,    32,    20,    21,    22,    23,
-      24,    25,    26,    27,    28,    29,    30,    31,     0,    34,
-      35,    36,    37,     0,    38,    39,    40,    33
+      11,    12,    13,    14,    15,    16,    34,    21,    22,    23,
+      24,    25,    26,    27,    28,    29,    30,    31,    32,    33,
+       0,    36,    37,    38,    39,     0,    40,    41,    42,    35
 };
 
 static const yytype_int8 yycheck[] =
 {
        3,     4,     5,     6,     7,     8,     9,    10,    11,    12,
-      13,    14,    15,    16,    17,     0,    18,    18,    18,    18,
-      18,    18,    18,    18,    18,    18,    18,    18,    -1,    19,
-      18,    18,    18,    -1,    18,    18,    18,    18
+      13,    14,    15,    16,    17,    18,     0,    19,    19,    19,
+      19,    19,    19,    19,    19,    19,    19,    19,    19,    19,
+      -1,    20,    19,    19,    19,    -1,    19,    19,    19,    19
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -629,18 +630,18 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     3,     4,     5,     6,     7,     8,     9,    10,    11,
-      12,    13,    14,    15,    16,    17,    21,    22,    23,    24,
-      18,    18,    18,    18,    18,    18,    18,    18,    18,    18,
-      18,    18,     0,    22,    19,    18,    18,    18,    18,    18,
-      18
+      12,    13,    14,    15,    16,    17,    18,    22,    23,    24,
+      25,    19,    19,    19,    19,    19,    19,    19,    19,    19,
+      19,    19,    19,    19,     0,    23,    20,    19,    19,    19,
+      19,    19,    19
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    20,    21,    22,    22,    23,    24,    24,    24,    24,
-      24,    24,    24,    24,    24,    24,    24,    24,    24,    24,
-      24
+       0,    21,    22,    23,    23,    24,    25,    25,    25,    25,
+      25,    25,    25,    25,    25,    25,    25,    25,    25,    25,
+      25,    25
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -648,7 +649,7 @@ static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     0,     2,     1,     2,     2,     2,
        2,     3,     3,     3,     3,     3,     3,     1,     2,     2,
-       1
+       1,     2
 };
 
 
@@ -1344,151 +1345,159 @@ yyreduce:
   switch (yyn)
     {
   case 3:
-#line 28 "htpl.y"
+#line 27 "htpl.y"
     {
 
     }
-#line 1352 "htpl.tab.c"
+#line 1353 "htpl.tab.c"
     break;
 
   case 5:
-#line 35 "htpl.y"
+#line 34 "htpl.y"
                          {
     int nthLine = readLine() - 1;
     codes[nthLine] = (yyvsp[-1].instPtr);
     // printf("line parsed: %d\n", nthLine);
   }
-#line 1362 "htpl.tab.c"
+#line 1363 "htpl.tab.c"
     break;
 
   case 6:
-#line 43 "htpl.y"
+#line 42 "htpl.y"
     {
       printErrorMsg("invalid operation code");
       exit(1);
     }
-#line 1371 "htpl.tab.c"
+#line 1372 "htpl.tab.c"
     break;
 
   case 7:
-#line 48 "htpl.y"
+#line 47 "htpl.y"
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1379 "htpl.tab.c"
+#line 1380 "htpl.tab.c"
     break;
 
   case 8:
-#line 52 "htpl.y"
+#line 51 "htpl.y"
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1387 "htpl.tab.c"
+#line 1388 "htpl.tab.c"
     break;
 
   case 9:
-#line 56 "htpl.y"
+#line 55 "htpl.y"
     {
       TagTreeNode* temp = newTag((yyvsp[-1].opcode));
       appendChild(nowTag, temp);
       nowTag = temp;
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1398 "htpl.tab.c"
+#line 1399 "htpl.tab.c"
     break;
 
   case 10:
-#line 63 "htpl.y"
+#line 62 "htpl.y"
     {
       closeTag(nowTag);
       nowTag = nowTag->parent;
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1408 "htpl.tab.c"
+#line 1409 "htpl.tab.c"
     break;
 
   case 11:
-#line 69 "htpl.y"
+#line 68 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number), 0);
+      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1416 "htpl.tab.c"
+#line 1417 "htpl.tab.c"
     break;
 
   case 12:
-#line 73 "htpl.y"
+#line 72 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number), 0);
+      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1424 "htpl.tab.c"
+#line 1425 "htpl.tab.c"
     break;
 
   case 13:
-#line 77 "htpl.y"
+#line 76 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number), 0);
+      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1432 "htpl.tab.c"
+#line 1433 "htpl.tab.c"
     break;
 
   case 14:
-#line 81 "htpl.y"
+#line 80 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number), 0);
+      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1440 "htpl.tab.c"
+#line 1441 "htpl.tab.c"
     break;
 
   case 15:
-#line 85 "htpl.y"
+#line 84 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number), 0);
+      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1448 "htpl.tab.c"
+#line 1449 "htpl.tab.c"
     break;
 
   case 16:
-#line 89 "htpl.y"
+#line 88 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number), 0);
+      (yyval.instPtr) = newOperation((yyvsp[-2].opcode), (yyvsp[-1].number), (yyvsp[0].number));
     }
-#line 1456 "htpl.tab.c"
+#line 1457 "htpl.tab.c"
     break;
 
   case 17:
-#line 93 "htpl.y"
+#line 92 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[0].opcode), 0);
+      (yyval.instPtr) = newOperation((yyvsp[0].opcode), 0, 0);
     }
-#line 1464 "htpl.tab.c"
+#line 1465 "htpl.tab.c"
     break;
 
   case 18:
-#line 97 "htpl.y"
+#line 96 "htpl.y"
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1472 "htpl.tab.c"
+#line 1473 "htpl.tab.c"
     break;
 
   case 19:
-#line 101 "htpl.y"
+#line 100 "htpl.y"
     {
       (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
     }
-#line 1480 "htpl.tab.c"
+#line 1481 "htpl.tab.c"
     break;
 
   case 20:
-#line 105 "htpl.y"
+#line 104 "htpl.y"
     {
-      (yyval.instPtr) = newOperation((yyvsp[0].opcode), 0);
+      (yyval.instPtr) = newOperation((yyvsp[0].opcode), 0, 0);
     }
-#line 1488 "htpl.tab.c"
+#line 1489 "htpl.tab.c"
+    break;
+
+  case 21:
+#line 108 "htpl.y"
+    {
+      (yyval.instPtr) = newOperation((yyvsp[-1].opcode), (yyvsp[0].number), 0);
+    }
+#line 1497 "htpl.tab.c"
     break;
 
 
-#line 1492 "htpl.tab.c"
+#line 1501 "htpl.tab.c"
 
       default: break;
     }
@@ -1720,7 +1729,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 108 "htpl.y"
+#line 111 "htpl.y"
 
 
 int yyerror(char* s)

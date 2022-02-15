@@ -43,13 +43,14 @@ WhiteSpace [ \t]+
     case OP_ORDER_POP: return OP_POP;
     case OP_ORDER_PUSH: return OP_PUSH;
     case OP_ORDER_DUPL: return OP_DUPL;
-    case OP_ORDER_STASH: return OP_STASH;
+    case OP_ORDER_FLUSH: return OP_FLUSH;
     case OP_ORDER_ADD: return OP_ADD;
     case OP_ORDER_JUMP: return OP_JUMP;
     case OP_ORDER_BREAK: return OP_BREAK;
     case OP_ORDER_PRINT: return OP_PRINT;
     case OP_ORDER_SCAN: return OP_SCAN;
     case OP_ORDER_EXIT: return OP_EXIT;
+    case OP_ORDER_POPMODE: return OP_POPMODE;
   }
 }
 
@@ -77,6 +78,8 @@ int readLine() {
 }
 
 void init() {
+  popMode = 1;
+
   tagTree.root = (TagTreeNode*)malloc(sizeof(TagTreeNode));
   tagTree.root->parent = NULL;
   tagTree.root->nextSibling = NULL;

@@ -67,7 +67,7 @@ void simulate() {
         break;
       }
       case OP_ORDER_POP: {
-        LinkedListNode* temp = popFront(lists[nowOperation->operand1]);
+        LinkedListNode* temp = popMode == 1 ? popFront(lists[nowOperation->operand1]) : duplFront(lists[nowOperation->operand1]);
         pushBack(lists[nowOperation->operand2], temp);
 
         pc++;
@@ -87,28 +87,41 @@ void simulate() {
         pc++;
         break;
       }
-      case OP_ORDER_STASH: {
+      case OP_ORDER_FLUSH: {
         for(int i=0; i<nowOperation->operand2; i++) deleteFront(lists[nowOperation->operand1]);
         
         pc++;
         break;
       }
       case OP_ORDER_ADD: {
-        LinkedListNode* temp1 = popFront(lists[nowOperation->operand1]);
-        LinkedListNode* temp2 = popFront(lists[nowOperation->operand1]);
+        LinkedListNode* temp1 = popMode == 1 ? popFront(lists[nowOperation->operand1]) : duplFront(lists[nowOperation->operand1]);
+        LinkedListNode* temp2 = popMode == 1 ? popFront(lists[nowOperation->operand1]) : duplSecond(lists[nowOperation->operand1]);
         LinkedListNode* result = newLinkedListNode(temp1->data + temp2->data + nowOperation->operand2);
+        // printf("ADD %d %d %d = %d\n", temp1->data, temp2->data, nowOperation->operand2, result->data);
         pushBack(lists[nowOperation->operand1], result);
 
         pc++;
         break;
       }
       case OP_ORDER_JUMP: {
-        LinkedListNode* temp = popFront(lists[(int)nowOperation->operand1]);
-        if(temp != 0) {
-          nowTag = jumpSibling(nowTag, nowOperation->operand2);
-          pc = nowTag->openingLine;
+        // printf("now list size: %d\n", lists[(int)nowOperation->operand1]->size);
+        // printf("jump success? ");
+        LinkedListNode* temp = popMode == 1 ? popFront(lists[nowOperation->operand1]) : duplFront(lists[nowOperation->operand1]);
+        if(temp->data != 0) {
+          // printf("yes! go to ");
+          nowTag = nowTag->parent;
+          pc = nthChild(nowTag, getLast(tagStack)->data + nowOperation->operand2)->openingLine;
+
+          deleteBack(tagStack);
+          LinkedListNode* tagStackTop = popBack(tagStack);
+          tagStackTop->data = nowTag->isNthChild;
+          pushBack(tagStack, tagStackTop);
+
+          // printf("%d\n", pc);
+          // printf("now tagstack size: %d\n", tagStack->size);
         }
         else {
+          // printf("no! go next\n");
           pc++;
         }
 
@@ -121,7 +134,8 @@ void simulate() {
         break;
       }
       case OP_ORDER_PRINT: {
-        LinkedListNode* temp = popFront(lists[(int)nowOperation->operand1]);
+        LinkedListNode* temp = popMode == 1 ? popFront(lists[nowOperation->operand1]) : duplFront(lists[nowOperation->operand1]);
+        // printf("PRINT: %d\n", temp->data);
         printf("%c", temp->data);
 
         pc++;
@@ -136,6 +150,13 @@ void simulate() {
       }
       case OP_ORDER_EXIT: {
         exitFlag = 1;
+        break;
+      }
+      case OP_ORDER_POPMODE: {
+        popMode = !(nowOperation->operand1 == 0);
+        // printf("now popmode %d\n", popMode);
+
+        pc++;
         break;
       }
     }

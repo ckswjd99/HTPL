@@ -53,3 +53,8 @@ dkms.conf
 
 .vscode
 node_modules
+src/backend/htpl
+
+*.output
+*.tab.*
+*.yy.*

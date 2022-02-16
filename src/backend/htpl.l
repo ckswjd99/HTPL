@@ -111,10 +111,10 @@ int main(int argc, char* argv[]) {
 
 	yyparse();
   
+	fclose(yyin);
   // printTag(tagTree.root);
   // printf("parsed!\n");
   simulate();
 
-	fclose(yyin);
 	return 0;
 }

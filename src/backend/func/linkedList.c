@@ -76,6 +76,13 @@ LinkedListNode *duplSecond(LinkedList *linkedList) {
 }
 
 LinkedListNode *getLast(LinkedList *linkedList) {
+  if(linkedList->size == 0) {
+    LinkedListNode* temp = (LinkedListNode*)malloc(sizeof(LinkedListNode));
+    temp->data = 0;
+    temp->next = NULL;
+    return temp;
+  }
+
   LinkedListNode* temp = linkedList->head;
   while(temp->next != NULL) temp = temp->next;
   return temp;

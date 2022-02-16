@@ -10,6 +10,7 @@ void simulate() {
   // for(int i=1; i<=totalLine; i++) printOperation(codes[i]);
   
   int exitFlag = 0;
+  int exitCode = 0;
 
   while(1) {
     // printf("loop... %d\n", pc);
@@ -165,6 +166,7 @@ void simulate() {
       }
       case OP_ORDER_EXIT: {
         exitFlag = 1;
+        exitCode = getLast(lists[1])->data;
         break;
       }
       case OP_ORDER_POPMODE: {
@@ -178,4 +180,6 @@ void simulate() {
 
     if(exitFlag) break;
   }
+
+  exit(exitCode);
 }

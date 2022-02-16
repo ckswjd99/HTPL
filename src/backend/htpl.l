@@ -111,6 +111,7 @@ int main(int argc, char* argv[]) {
 
 	yyparse();
   
+  // printTag(tagTree.root);
   // printf("parsed!\n");
   simulate();
 

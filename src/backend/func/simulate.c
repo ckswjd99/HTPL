@@ -50,6 +50,7 @@ void simulate() {
       case OP_ORDER_OPEN: {
         LinkedListNode* parent = popBack(tagStack);
         parent->data++;
+        // printf("open %d! %d %p\n", nowOperation->operand1, parent->data, nowTag->children);
         nowTag = nthChild(nowTag, parent->data);
         pushBack(tagStack, parent);
 
@@ -57,11 +58,15 @@ void simulate() {
         pushBack(tagStack, self);
 
         pc++;
+
+        // printf("OPENED %d, tagStack size %d, tagStack top %d, nowTag is %dth child\n", nowOperation->operand1, tagStack->size, getLast(tagStack)->data, nowTag->isNthChild);
         break;
       }
       case OP_ORDER_CLOSE: {
         nowTag = nowTag->parent;
         deleteBack(tagStack);
+
+        // printf("CLOSED %d, tagStack size %d, tagStack top %d, nowTag is %dth child\n", nowOperation->operand1, tagStack->size, getLast(tagStack)->data, nowTag->isNthChild);
 
         pc++;
         break;
@@ -110,17 +115,18 @@ void simulate() {
         // printf("jump success? ");
         LinkedListNode* temp = popMode == 1 ? popFront(lists[nowOperation->operand1]) : duplFront(lists[nowOperation->operand1]);
         if(temp->data != 0) {
-          // printf("yes! go to ");
+          // printf("yes! (val %d) go to ", temp->data);
+          TagTreeNode* targetTag = jumpSibling(nowTag, nowOperation->operand2);
           nowTag = nowTag->parent;
-          pc = nthChild(nowTag, getLast(tagStack)->data + nowOperation->operand2)->openingLine;
-
           deleteBack(tagStack);
+
+          pc = targetTag->openingLine;
+          // printf("%d\n", pc);
           LinkedListNode* tagStackTop = popBack(tagStack);
-          tagStackTop->data = nowTag->isNthChild;
+          tagStackTop->data = targetTag->isNthChild-1;
+          // printf("stack(%d)topdata: %d\n", tagStack->size, tagStackTop->data);
           pushBack(tagStack, tagStackTop);
 
-          // printf("%d\n", pc);
-          // printf("now tagstack size: %d\n", tagStack->size);
         }
         else {
           // printf("no! go next\n");
